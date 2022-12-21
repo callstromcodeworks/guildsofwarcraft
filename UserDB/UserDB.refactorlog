@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="ba9aba2b-05c2-41bb-ba37-ac66e1195025" ChangeDateTime="12/02/2022 15:15:32">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guildid]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e87340e6-5bb9-4e15-9958-2a388866610a" ChangeDateTime="12/02/2022 15:18:20">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="discord_guild_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9f34ef96-65f2-443d-8909-87c8f4e43ed2" ChangeDateTime="12/02/2022 15:26:36">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b396bef7-5ba8-484d-8323-a50151bfe97a" ChangeDateTime="12/02/2022 15:29:01">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_realm]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_faction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c0eec7bf-eeb4-4317-b30f-d1e7e0599935" ChangeDateTime="12/02/2022 15:32:32">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_crest]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_creation_timestamp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="409315fe-2f48-4151-abc3-47e393cb9cdb" ChangeDateTime="12/13/2022 07:04:27">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7d3ed068-442e-4167-914f-011119ee48c4" ChangeDateTime="12/13/2022 07:04:40">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[wow_guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4f1e395b-fca6-4cba-a31b-743d6be74c58" ChangeDateTime="12/13/2022 09:27:35">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="720b746f-84be-47af-8c77-2a0981c99364" ChangeDateTime="12/13/2022 09:27:37">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_faction]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="faction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="75187be1-c43f-4e8d-8d3f-0ae0c5e452f5" ChangeDateTime="12/13/2022 09:27:39">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_ach_points]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ach_points" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3ad87af4-b30c-4c5f-9079-e99ca6da53fe" ChangeDateTime="12/13/2022 09:27:41">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_memeber_count]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="memeber_count" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c30deb17-1c5e-4120-bce4-ef2a76031a6c" ChangeDateTime="12/13/2022 09:27:43">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_realm]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="realm" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="89513a58-0e5f-4907-8fe1-73e9ad2c6d23" ChangeDateTime="12/13/2022 09:27:46">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_creation_timestamp]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="creation_timestamp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5b533a7c-cd28-47c4-a4f2-f0d2cd634a85" ChangeDateTime="12/13/2022 19:07:34">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="wow_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f3f38d54-6b3d-4788-823e-9509e834b4dd" ChangeDateTime="12/13/2022 19:08:37">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="discord_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="31ab103d-e389-4cbd-96dc-480324955a36" ChangeDateTime="12/13/2022 19:18:18">
+    <Property Name="ElementName" Value="[dbo].[WoWCrests].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWCrests]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="discord_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5867e576-3dd8-4749-9f03-810372412a6a" ChangeDateTime="12/13/2022 19:20:07">
+    <Property Name="ElementName" Value="[dbo].[DiscordEvents].[guild_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordEvents]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="discord_id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="215dac01-46de-4e5b-ba9b-c301feeeb8e5" ChangeDateTime="12/19/2022 20:33:08">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GuildName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7c254fc2-b3ba-4474-925c-41957a6b82a3" ChangeDateTime="12/19/2022 20:33:15">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[faction]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Faction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="20b02b2e-ab65-48a6-b871-fdceed9ef69c" ChangeDateTime="12/19/2022 20:33:21">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[Faction]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="faction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7b004d6a-980f-42c7-a6b7-259a88b41e73" ChangeDateTime="12/19/2022 20:33:25">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[GuildName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="guild_name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5bc8de40-80bf-4ecd-bf28-c54f5d4ffbbe" ChangeDateTime="12/19/2022 22:58:50">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[ach_points]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="achievement_points" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="84c54b72-6c83-44d0-8226-5d9960f89ea3" ChangeDateTime="12/19/2022 23:00:06">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[memeber_count]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="member_count" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="90cb3e44-4411-4448-bdb9-a8918216f39b" ChangeDateTime="12/19/2022 23:07:09">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[guild_name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GuildName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7e215235-8769-494b-997d-3bf3caca0e83" ChangeDateTime="12/19/2022 23:07:12">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[faction]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Faction" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b9fdc38e-4a54-4140-b12d-2b3acd7913f5" ChangeDateTime="12/19/2022 23:07:21">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[achievement_points]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AchievementPoints" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a418b6dc-904d-4070-8342-8687ebb86f8e" ChangeDateTime="12/19/2022 23:07:26">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[member_count]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="MemberCount" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="563a08ba-e7cc-4eb0-9cf6-66545bf97bd9" ChangeDateTime="12/19/2022 23:07:29">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[realm]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Realmn" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="03c38bc5-5524-402e-99f9-7204207e31b3" ChangeDateTime="12/19/2022 23:07:33">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[Realmn]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Realm" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b89ba667-5755-40a8-aa1a-e92670ea02e5" ChangeDateTime="12/19/2022 23:07:39">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[creation_timestamp]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreationTimestamp" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b9cea4f4-c840-4b0f-9157-6ed06f085ffd" ChangeDateTime="12/19/2022 23:07:46">
+    <Property Name="ElementName" Value="[dbo].[WoWGuilds].[discord_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DiscordId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d82b9790-4599-4998-be73-b0197e253291" ChangeDateTime="12/19/2022 23:07:55">
+    <Property Name="ElementName" Value="[dbo].[DiscordEvents].[discord_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordEvents]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DiscordId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="86233c16-90dc-4588-92ab-1ba9ebdc8387" ChangeDateTime="12/19/2022 23:08:03">
+    <Property Name="ElementName" Value="[dbo].[DiscordEvents].[start_date]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordEvents]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="StartDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f325ef22-9d76-4d01-b962-721e1fc92a3e" ChangeDateTime="12/19/2022 23:08:06">
+    <Property Name="ElementName" Value="[dbo].[DiscordEvents].[duration]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordEvents]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Duration" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3fd69fb8-12c6-410e-a2dc-f951056635f4" ChangeDateTime="12/19/2022 23:08:17">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[command_prefix]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CommandPrefix" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d57b36a2-5a7d-40e5-96dc-8cbdef726d31" ChangeDateTime="12/19/2022 23:08:21">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[wow_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WowId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="364f8a4b-63e3-49a3-a024-3772c8c99d82" ChangeDateTime="12/19/2022 23:08:34">
+    <Property Name="ElementName" Value="[dbo].[WoWCrests].[discord_id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[WoWCrests]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DiscordId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="1cc491b5-9fc9-40b8-952c-c5f9798ee878" ChangeDateTime="12/21/2022 08:48:28">
+    <Property Name="ElementName" Value="[dbo].[DiscordGuilds].[Available]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[DiscordGuilds]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Unavailable" />
+  </Operation>
+</Operations>

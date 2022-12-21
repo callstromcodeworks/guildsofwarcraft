@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CCW.GoW": {
+      "commandName": "Project",
+      "sqlDebugging": true
+    }
+  }
+}
