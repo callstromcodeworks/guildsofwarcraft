@@ -78,28 +78,13 @@ public class DataHandler
         parameters.Add(DataContracts.SpParams.UpdateDiscordServer.Id, config.Id);
         parameters.Add(DataContracts.SpParams.UpdateDiscordServer.Name, config.Name);
         parameters.Add(DataContracts.SpParams.UpdateDiscordServer.Prefix, config.CommandPrefix);
+        parameters.Add(DataContracts.SpParams.UpdateDiscordServer.Unavailable, config.Unavailable);
         bool result = false;
         try
         {
             result = await con.ExecuteAsync(DataContracts.SpParams.UpdateDiscordServer._SpName, param: parameters, commandType: CommandType.StoredProcedure) != 0;
         } catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
-        }
-        return result;
-    }
-    public async Task<bool> UpdateDiscordServerAvailability(string id, bool unavailable)
-    {
-        using SqlConnection con = new(connectionString);
-        var parameters = new DynamicParameters();
-        parameters.Add(DataContracts.SpParams.UpdateDiscordServerAvailability.Id, id);
-        parameters.Add(DataContracts.SpParams.UpdateDiscordServerAvailability.Unavailable, unavailable);
-        bool result = false;
-        try
-        {
-            result = await con.ExecuteAsync(DataContracts.SpParams.UpdateDiscordServerAvailability._SpName, param: parameters, commandType: CommandType.StoredProcedure) != 0;
-        }
-        catch (Exception ex){ 
             Console.WriteLine(ex.ToString());
         }
         return result;
@@ -122,9 +107,9 @@ public class DataHandler
         return result;
     }
 
-    public async Task<List<ServerConfig>> LoadAllServers()
+    public async Task<HashSet<ServerConfig>> LoadAllServers()
     {
         using SqlConnection con = new(connectionString);
-        return (await con.QueryAsync<ServerConfig>(sql: DataContracts.SpParams.GetServerInfo._SpNameAll, commandType: CommandType.StoredProcedure)).ToList();
+        return (await con.QueryAsync<ServerConfig>(sql: DataContracts.SpParams.GetServerInfo._SpNameAll, commandType: CommandType.StoredProcedure)).ToHashSet();
     }
 }

@@ -19,32 +19,39 @@ namespace CCW.GoW.Services
             consoleBox = window.consoleBox;
             discordStatus = window.discordStatus;
         }
-        private delegate Task SetServerListDataSourceDelegate(ref List<ServerConfig> dataSource);
-        private SetServerListDataSourceDelegate GetDelegate()
-        {
-            return delegate(ref List<ServerConfig> dataSource)
-                {
-                    serverList.DataSource = dataSource;
-                    serverList.DisplayMember = "Name";
-                    return Task.CompletedTask;
-                };
-        }
 
-    /// <summary>
-    /// Sets the data source and display member for the server list
-    /// </summary>
-    /// <param name="dataSource">The datasource to use for the server list</param>
-    /// <returns></returns>
-    public Task SetServerListDataSource(ref List<ServerConfig> dataSource)
-        {
-            if (serverList.InvokeRequired)
+        /// <summary>
+        /// Sets the data source and display member for the server list
+        /// </summary>
+        /// <param name="dataSource">The datasource to use for the server list</param>
+        /// <returns></returns>
+        public Task SetServerListDataSource(HashSet<ServerConfig> dataSource)
             {
-                serverList.Invoke(GetDelegate(), dataSource);
+                if (serverList.InvokeRequired) serverList.Invoke( delegate { SetServerListDataSource(dataSource);  });
+                else
+                {
+                    serverList.DataSource = dataSource.ToList();
+                    serverList.DisplayMember = "Name";
+                }
+                return Task.CompletedTask;
             }
+
+        public Task AddServerListItem(string name)
+        {
+            if (serverList.InvokeRequired) serverList.Invoke( delegate { AddServerListItem(name); });
             else
             {
-                serverList.DataSource = dataSource;
-                serverList.DisplayMember = "Name";
+                serverList.Items.Add(name);
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task RemoveServerListItem(string name)
+        {
+            if (serverList.InvokeRequired) serverList.Invoke(delegate { RemoveServerListItem(name); });
+            else
+            {
+                serverList.Items.Remove(name);
             }
             return Task.CompletedTask;
         }

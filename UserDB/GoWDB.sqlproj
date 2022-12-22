@@ -75,7 +75,6 @@
     <Build Include="dbo\Tables\DiscordEvents.sql" />
     <Build Include="Stored Procedures\AddDiscordServer.sql" />
     <Build Include="Stored Procedures\GetAllServers.sql" />
-    <Build Include="Stored Procedures\UpdateDiscordServerAvailability.sql" />
     <Build Include="Stored Procedures\UpdateDiscordServer.sql" />
   </ItemGroup>
   <ItemGroup>

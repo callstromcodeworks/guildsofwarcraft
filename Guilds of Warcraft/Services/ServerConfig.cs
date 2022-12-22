@@ -14,6 +14,7 @@ public class ServerConfig
     public string Id { get; set; } = string.Empty;
     public char CommandPrefix { get; set; } = '!';
     public string WowId { get; set; } = string.Empty;
+    public bool Unavailable { get; set; } = false;
     public string GuildName { get; set; } = string.Empty;
     public string Faction { get; set; } = string.Empty;
     public string AchievementPoints { get; set; } = string.Empty;

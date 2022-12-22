@@ -22,17 +22,14 @@ internal class DiscordService
     private readonly DiscordSocketClient discordClient;
     private readonly CommandService commandService;
     private readonly DataHandler dataHandler;
-    private List<ServerConfig> configSet;
+    private HashSet<ServerConfig> configSet;
 
     private static readonly string SourceInit = "Init";
     private static readonly string SourceGuilds = "Guilds Handler";
     private static readonly string SourceGuildEvents = "Guild Event Handler";
-    private static readonly string SourceGlobalCommands = "Global Command Handler";
+    private static readonly string SourceGlobalCommands = "Global Commands";
     private static readonly string SourceCommands = "Command Handler";
     private static readonly string SourceMessages = "Message Handler";
-
-    //TODO switch this over to a database column and modify stored procedure accordingly to not load these guilds
-    private readonly HashSet<ServerConfig> ConfigsUnavailable = new();
 
     public DiscordService(IServiceProvider _services)
     {
@@ -47,11 +44,10 @@ internal class DiscordService
 
     public async Task RunAsync()
     {
-        await uiService.SetServerListDataSource(ref configSet);
+        //await uiService.SetServerListDataSource(configSet);
         SetEventHandlers();
         await discordClient.LoginAsync(TokenType.Bot, Program.AppConfig.DiscordToken);
         await discordClient.StartAsync();
-
         await Log(new LogMessage(LogSeverity.Debug, SourceInit, "Adding Modules"));
         await commandService.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: services);
         await CreateGlobalCommands();
@@ -139,14 +135,20 @@ internal class DiscordService
             if(!await dataHandler.AddDiscordServer(config)) await dataHandler.UpdateDiscordServer(config);
         }
         configSet.Add(config);
+        await uiService.AddServerListItem(config.Name);
         await Log(new LogMessage(LogSeverity.Info, SourceInit, $"Guild available: {guild.Name}"));
     }
     async Task GuildUnavilableEvent(SocketGuild guild)
     {
-        await dataHandler.UpdateDiscordServerAvailability(guild.Id.ToString(), true);
-        var config = configSet.Find(x => x.Id == guild.Id.ToString());
-        if (config != null) configSet.Remove(config);
-        await Log(new LogMessage(LogSeverity.Warning, SourceInit, $"Guild unavailable: {guild.Name}"));
+        var config = configSet.First(x => x.Id == guild.Id.ToString());
+        if (config != null)
+        {
+            configSet.Remove(config);
+            await uiService.RemoveServerListItem(config.Name);
+            await dataHandler.UpdateDiscordServer(config);
+            await Log(new LogMessage(LogSeverity.Info, SourceInit, $"Guild unavailable: {guild.Name}"));
+        }
+        else await Log(new LogMessage(LogSeverity.Warning, SourceInit, "Guild not in configuration set"));
     }
     async Task JoinedGuildEvent(SocketGuild guild)
     {
@@ -157,15 +159,20 @@ internal class DiscordService
         };
         await dataHandler.AddDiscordServer(config);
         configSet.Add(config);
+        await uiService.AddServerListItem(config.Name);
         await Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Joined guild: {guild.Name}"));
     }
-    Task LeftGuildEvent(SocketGuild guild)
+    async Task LeftGuildEvent(SocketGuild guild)
     {
-        ServerConfig config = configSet.First(c => c.Id == guild.Id.ToString());
-        if (config == null) return Log(new LogMessage(LogSeverity.Warning, SourceGuilds, $"Guild not in configSet: {guild.Name}"));
-        dataHandler.RemoveDiscordServer(config).GetAwaiter().GetResult();
-        configSet.Remove(config);
-        return Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Left guild: {guild.Name}"));
+        await Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Left guild: {guild.Name}"));
+        var config = configSet.First(c => c.Id == guild.Id.ToString());
+        if (config == null) await Log(new LogMessage(LogSeverity.Warning, SourceGuilds, "Guild not in configuration set so not removed"));
+        else
+        {
+            await dataHandler.RemoveDiscordServer(config);
+            configSet.Remove(config);
+            await uiService.RemoveServerListItem(config.Name);
+        }
     }
     Task InviteCreatedEvent(SocketInvite invite)
     {

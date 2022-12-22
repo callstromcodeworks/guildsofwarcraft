@@ -102,11 +102,6 @@ public class DataContracts
             public readonly static string Id = "id";
             public static readonly string Name = "name";
             public readonly static string Prefix = "prefix";
-        }
-        public readonly struct UpdateDiscordServerAvailability
-        {
-            public readonly static string _SpName = "UpdateDiscordServerAvailability";
-            public readonly static string Id = "id";
             public readonly static string Unavailable = "unavailable";
         }
     }
