@@ -16,9 +16,6 @@ namespace CCW.GoW
         public DebugTools()
         {
             InitializeComponent();
-            authCodeTextBox.Text = Program.AppConfig.TempAuthCode;
-            tokenTextBox.Text = Program.AppConfig.TempAuthToken;
-            clientCredTokenTextBox.Text = Program.AppConfig.TempGenericToken;
         }
 
         private void GetAuthCodeButton_Click(object sender, EventArgs e)

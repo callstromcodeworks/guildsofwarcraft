@@ -39,6 +39,7 @@
             this.consoleBox = new System.Windows.Forms.TextBox();
             this.serverList = new System.Windows.Forms.ListBox();
             this.serverListLabel = new System.Windows.Forms.Label();
+            this.inviteLinkToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +65,7 @@
             this.fileItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configItem,
             this.debugToolsMenuItem,
+            this.inviteLinkToolStripMenuItem,
             this.exitItem});
             this.fileItem.Name = "fileItem";
             this.fileItem.Size = new System.Drawing.Size(37, 20);
@@ -72,21 +74,21 @@
             // configItem
             // 
             this.configItem.Name = "configItem";
-            this.configItem.Size = new System.Drawing.Size(139, 22);
+            this.configItem.Size = new System.Drawing.Size(180, 22);
             this.configItem.Text = "Config";
             this.configItem.Click += new System.EventHandler(this.ConfigMenuItem_Click);
             // 
             // debugToolsMenuItem
             // 
             this.debugToolsMenuItem.Name = "debugToolsMenuItem";
-            this.debugToolsMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.debugToolsMenuItem.Size = new System.Drawing.Size(180, 22);
             this.debugToolsMenuItem.Text = "Debug Tools";
             this.debugToolsMenuItem.Click += new System.EventHandler(this.DebugToolsMenuItem_Click);
             // 
             // exitItem
             // 
             this.exitItem.Name = "exitItem";
-            this.exitItem.Size = new System.Drawing.Size(139, 22);
+            this.exitItem.Size = new System.Drawing.Size(180, 22);
             this.exitItem.Text = "Exit";
             this.exitItem.Click += new System.EventHandler(this.ExitMenuItem_Click);
             // 
@@ -140,8 +142,7 @@
             // 
             // serverListLabel
             // 
-            this.serverListLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.serverListLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.serverListLabel.AutoSize = true;
             this.serverListLabel.Location = new System.Drawing.Point(600, 27);
@@ -149,6 +150,13 @@
             this.serverListLabel.Size = new System.Drawing.Size(91, 15);
             this.serverListLabel.TabIndex = 4;
             this.serverListLabel.Text = "Available Guilds";
+            // 
+            // inviteLinkToolStripMenuItem
+            // 
+            this.inviteLinkToolStripMenuItem.Name = "inviteLinkToolStripMenuItem";
+            this.inviteLinkToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.inviteLinkToolStripMenuItem.Text = "Invite Link";
+            this.inviteLinkToolStripMenuItem.Click += new System.EventHandler(this.InviteMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -186,5 +194,6 @@
         public ToolStripStatusLabel discordStatus;
         private Label serverListLabel;
         private ToolStripMenuItem debugToolsMenuItem;
+        private ToolStripMenuItem inviteLinkToolStripMenuItem;
     }
 }

@@ -6,7 +6,7 @@
  * 
  */
 
-namespace CCW.GoW.Services;
+namespace CCW.GoW.DataService;
 
 //TODO add localized strings for other languages
 

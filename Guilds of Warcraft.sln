@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guilds of Warcraft", "Guild
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GoWDB", "UserDB\GoWDB.sqlproj", "{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardOauthServer", "BlizzardOauthServer\BlizzardOauthServer.csproj", "{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataService", "DataService\DataService.csproj", "{B2893E14-C3C5-49A6-A815-C3D7306CB353}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardApi", "BlizzardApi\BlizzardApi.csproj", "{24A3C090-B638-445F-90ED-2921C5372E93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extentions", "Extentions\Extentions.csproj", "{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +31,22 @@ Global
 		{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2893E14-C3C5-49A6-A815-C3D7306CB353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2893E14-C3C5-49A6-A815-C3D7306CB353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2893E14-C3C5-49A6-A815-C3D7306CB353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2893E14-C3C5-49A6-A815-C3D7306CB353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24A3C090-B638-445F-90ED-2921C5372E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24A3C090-B638-445F-90ED-2921C5372E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24A3C090-B638-445F-90ED-2921C5372E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24A3C090-B638-445F-90ED-2921C5372E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

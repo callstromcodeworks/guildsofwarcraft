@@ -10,7 +10,7 @@ using System.Text;
 
 namespace CCW.GoW.Extentions;
 
-public static class Base64Extensions
+public static class Base64Extentions
 {
     /// <summary>
     /// Encode string to Base64

@@ -5,79 +5,104 @@
  * 
  * 
  */
+using MessagePipe;
 
-namespace CCW.GoW.Services
+namespace CCW.GoW;
+
+public class UiService
 {
-    internal class UiService
+    internal ListBox serverList;
+    internal TextBox consoleBox;
+    internal ToolStripLabel discordStatus;
+    private static UiService? _instance;
+    private UiService(MainWindow window)
     {
-        internal ListBox serverList;
-        internal TextBox consoleBox;
-        internal ToolStripLabel discordStatus;
-        public UiService(MainWindow window)
+        serverList = window.serverList;
+        consoleBox = window.consoleBox;
+        discordStatus = window.discordStatus;
+    }
+    internal static UiService CreateInstance(MainWindow window)
+    {
+        _instance = new UiService(window);
+        return _instance;
+    }
+
+    public Task AddItem(string name)
+    {
+        if (serverList.InvokeRequired) serverList.Invoke( delegate { AddItem(name); });
+        else serverList.Items.Add(name);
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask AddItemAsync(string name, CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
         {
-            serverList = window.serverList;
-            consoleBox = window.consoleBox;
-            discordStatus = window.discordStatus;
+            await AddItem(name);
+            break;
         }
+    }
 
-        /// <summary>
-        /// Sets the data source and display member for the server list
-        /// </summary>
-        /// <param name="dataSource">The datasource to use for the server list</param>
-        /// <returns></returns>
-        public Task SetServerListDataSource(HashSet<ServerConfig> dataSource)
-            {
-                if (serverList.InvokeRequired) serverList.Invoke( delegate { SetServerListDataSource(dataSource);  });
-                else
-                {
-                    serverList.DataSource = dataSource.ToList();
-                    serverList.DisplayMember = "Name";
-                }
-                return Task.CompletedTask;
-            }
+    public Task RemoveItem(string name)
+    {
+        if (serverList.InvokeRequired) serverList.Invoke(delegate { RemoveItem(name); });
+        else serverList.Items.Remove(name);
+        return Task.CompletedTask;
+    }
 
-        public Task AddServerListItem(string name)
+    public async ValueTask RemoveItemAsync(string name, CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
         {
-            if (serverList.InvokeRequired) serverList.Invoke( delegate { AddServerListItem(name); });
-            else
-            {
-                serverList.Items.Add(name);
-            }
-            return Task.CompletedTask;
+            await RemoveItem(name);
+            break;
         }
+    }
 
-        public Task RemoveServerListItem(string name)
+    /// <summary>
+    /// Updates the tool strip Gateway connection status
+    /// </summary>
+    /// <param name="text">The new status to display.</param>
+    /// <returns></returns>
+    public Task UpdateStatus(string text)
+    {
+        if (discordStatus.GetCurrentParent().InvokeRequired) discordStatus.GetCurrentParent().Invoke(delegate { UpdateStatus(text); });
+        else discordStatus.Text = text;
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask UpdateStatusAsync(string text, CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
         {
-            if (serverList.InvokeRequired) serverList.Invoke(delegate { RemoveServerListItem(name); });
-            else
-            {
-                serverList.Items.Remove(name);
-            }
-            return Task.CompletedTask;
+            await UpdateStatus(text);
+            break;
         }
+    }
 
-        /// <summary>
-        /// Updates the tool strip Gateway connection status
-        /// </summary>
-        /// <param name="text">The new status to display.</param>
-        /// <returns></returns>
-        public Task UpdateDiscordStatus(string text)
-        {
-            if (discordStatus.GetCurrentParent().InvokeRequired) discordStatus.GetCurrentParent().Invoke(delegate { UpdateDiscordStatus(text); });
-            else discordStatus.Text = text;
-            return Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Write a line to the textbox used as console output
-        /// </summary>
-        /// <param name="text">The text to write.</param>
-        /// <returns></returns>
-        public Task WriteLine(string text)
+    /// <summary>
+    /// Write a line to the textbox used as console output
+    /// </summary>
+    /// <param name="text">The text to write.</param>
+    /// <returns></returns>
+    public Task WriteLine(string text)
+    {
+        if (!consoleBox.Created) consoleBox.HandleCreated += (sender, e) =>
         {
             if (consoleBox.InvokeRequired) consoleBox.Invoke(delegate { WriteLine(text); });
             else consoleBox.AppendText($"{text}{Environment.NewLine}");
-            return Task.CompletedTask;
+        };
+        if (consoleBox.InvokeRequired) consoleBox.Invoke(delegate { WriteLine(text); });
+        else consoleBox.AppendText($"{text}{Environment.NewLine}");
+        return Task.CompletedTask;
+    }
+
+    public async ValueTask WriteLineAsync(string text, CancellationToken token)
+    {
+        while (!token.IsCancellationRequested)
+        {
+            await WriteLine(text);
+            break;
         }
     }
 }

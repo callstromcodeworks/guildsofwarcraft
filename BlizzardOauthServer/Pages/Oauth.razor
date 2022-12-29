@@ -1,0 +1,13 @@
+﻿@page "/oauth"
+@inject NavigationManager NavManager
+@using Microsoft.AspNetCore.WebUtilities
+
+@code {
+    protected override void OnInitialized()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var authCode)) {
+            
+        }
+}
+}

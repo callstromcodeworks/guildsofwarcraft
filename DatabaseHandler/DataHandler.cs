@@ -8,8 +8,8 @@
 
 using CCW.GoW.Services;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace CCW.GoW;
 
@@ -30,9 +30,10 @@ public class DataHandler
         parameters.Add(DataContracts.SpParams.AddDiscordServer.Prefix, '!');
         try
         {
-            return await con.ExecuteAsync(DataContracts.SpParams.AddDiscordServer._SpName, param: parameters, commandType: CommandType.StoredProcedure) != 0;
+            return await con.ExecuteAsync(DataContracts.SpParams.AddDiscordServer._SpName, param: parameters, commandType: CommandType.StoredProcedure) is not 0;
         } catch (Exception ex) 
         {
+
             return false;
         }
     }
@@ -44,7 +45,7 @@ public class DataHandler
         parameters.Add(DataContracts.SpParams.RemoveDiscordServer.Id, config.Id);
         if (config.WowId != string.Empty) parameters.Add(DataContracts.SpParams.RemoveDiscordServer.WowId, config.WowId);
         else parameters.Add(DataContracts.SpParams.RemoveDiscordServer.WowId, "-1");
-        return await con.ExecuteAsync(DataContracts.SpParams.RemoveDiscordServer._SpName, param: parameters, commandType: CommandType.StoredProcedure) != 0;
+        return await con.ExecuteAsync(DataContracts.SpParams.RemoveDiscordServer._SpName, param: parameters, commandType: CommandType.StoredProcedure) is not 0;
     }
 
     public async Task<bool> AssociateGuild(ServerConfig config)

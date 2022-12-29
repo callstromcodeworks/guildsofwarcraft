@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows10.0.22621.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-DataService-691c9a7c-a510-4643-a4ca-b48e4e65db53</UserSecretsId>
+    <RootNamespace>CCW.GoW.DataService</RootNamespace>
+    <StartupObject></StartupObject>
+    <OutputType>WinExe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="config.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="Discord.Net" Version="3.9.0" />
+    <PackageReference Include="MessagePipe" Version="1.7.4" />
+    <PackageReference Include="MessagePipe.Interprocess" Version="1.7.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlizzardApi\BlizzardApi.csproj" />
+    <ProjectReference Include="..\Extentions\Extentions.csproj" />
+  </ItemGroup>
+</Project>

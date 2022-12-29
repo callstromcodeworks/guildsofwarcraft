@@ -5,7 +5,7 @@
  * 
  * 
  */
-
+using CCW.GoW;
 using CCW.GoW.Extentions;
 using Newtonsoft.Json;
 using System.Diagnostics;
@@ -16,6 +16,7 @@ namespace CCW.GoW.BlizzardApi;
 
 public class BlizzApiHandler
 {
+    static ApplicationConfig AppConfig = ApplicationConfig.GetConfig();
 
     public enum Region
     {
@@ -41,7 +42,7 @@ public class BlizzApiHandler
             _ => throw new NotImplementedException()
         };
     }
-    internal readonly struct Queries
+    public readonly struct Queries
     {
         public static readonly string ClieIdName = "client_id";
         public static readonly string RedirName = "redirect_uri";
@@ -82,7 +83,7 @@ public class BlizzApiHandler
     public static Task GetAuthorization()
     {
         Uri uri = new UriBuilder(OauthUri.Auth)
-            .AddQuery(Queries.ClieIdName, Program.AppConfig.ClientId)
+            .AddQuery(Queries.ClieIdName, AppConfig.ClientId)
             .AddQuery(Queries.ScopeName, Queries.ScopeValue)
             .AddQuery(Queries.StateName, GetStateBlob())
             .AddQuery(Queries.RedirName, Queries.RedirValue)
@@ -94,7 +95,7 @@ public class BlizzApiHandler
     public static Uri GetAuthorizationUri()
     {
         return new UriBuilder(OauthUri.Auth)
-            .AddQuery(Queries.ClieIdName, Program.AppConfig.ClientId)
+            .AddQuery(Queries.ClieIdName, AppConfig.ClientId)
             .AddQuery(Queries.ScopeName, Queries.ScopeValue)
             .AddQuery(Queries.StateName, GetStateBlob())
             .AddQuery(Queries.RedirName, Queries.RedirValue)
@@ -104,7 +105,7 @@ public class BlizzApiHandler
 
     public static async Task<TokenResponse> GetUserToken(string auth_code, string scope)
     {
-        string auth = $"{Program.AppConfig.ClientId}:{Program.AppConfig.ClientSecret}";
+        string auth = $"{AppConfig.ClientId}:{AppConfig.ClientSecret}";
         Uri uri = new UriBuilder(OauthUri.Token)
             .AddQuery(Queries.GranTyName, Queries.AuthCoValue)
             .AddQuery(Queries.RespTyValue, auth_code)
@@ -147,7 +148,7 @@ public class BlizzApiHandler
 
     public static async Task<TokenResponse> GetToken()
     {
-        string auth = $"{Program.AppConfig.ClientId}:{Program.AppConfig.ClientSecret}";
+        string auth = $"{AppConfig.ClientId}:{AppConfig.ClientSecret}";
         Uri uri = new UriBuilder(OauthUri.Token)
             .AddQuery(Queries.GranTyName, Queries.ClieCreValue)
             .Uri;
@@ -240,7 +241,7 @@ public class BlizzApiHandler
         StringBuilder sb = new();
         sb.Append(DateTime.UtcNow.ToString());
         sb.Append(Environment.TickCount64);
-        sb.Append(Program.AppConfig.ClientId);
+        sb.Append(AppConfig.ClientId);
         return sb.ToString().GetHashCode().ToString();
 
     }

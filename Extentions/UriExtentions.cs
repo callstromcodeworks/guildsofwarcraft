@@ -6,11 +6,9 @@
  * 
  */
 
-using System.Text;
-
 namespace CCW.GoW.Extentions;
 
-public static class UriTools
+public static class UriExtentions
 {
     /// <summary>
     /// Add query parameter to Uri

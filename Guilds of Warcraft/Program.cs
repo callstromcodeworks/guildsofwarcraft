@@ -5,12 +5,10 @@
  * 
  * 
  */
-
-using CCW.GoW.Services;
-using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
+using CCW.GoW.DataService;
+using MessagePipe;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace CCW.GoW;
 
@@ -20,19 +18,21 @@ namespace CCW.GoW;
 
 public class Program
 {
-    public static readonly ApplicationConfig AppConfig = ApplicationConfig.GetConfig();
-    public static readonly LogSeverity LogSeverityLevel =
-#if DEBUG
-        LogSeverity.Debug;
-#else
-        LogSeverity.Error;
-#endif
-
-    internal readonly IServiceProvider svc;
-
-    public Program()
+    static readonly IHost host = Host.CreateDefaultBuilder()
+            .ConfigureServices(services =>
+            {
+                services.AddHostedService<Worker>();
+            }).Build();
+    /// <summary>
+    /// Creates a <see cref="ServiceProvider"/> with the necessary services
+    /// </summary>
+    /// <returns>The <see cref="ServiceProvider"/>.</returns>
+    static IServiceProvider CreateProvider()
     {
-        svc = CreateProvider();
+        return new ServiceCollection()
+            .AddMessagePipe()
+            .AddMessagePipeNamedPipeInterprocess("CCW-GoW")
+            .BuildServiceProvider();
     }
 
     [STAThread]
@@ -40,38 +40,14 @@ public class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        new Program().Init();
+        host.RunAsync();
+        var window = new MainWindow(CreateProvider());
+        Application.Run(window);
+        Application.ApplicationExit += Exit;
     }
 
-    /// <summary>
-    /// Start the UI and worker threads
-    /// </summary>
-    public void Init()
+    private static void Exit(object? sender, EventArgs e)
     {
-        Task.Run(() => new DiscordService(svc));
-        Application.Run(svc.GetRequiredService<MainWindow>());
-    }
-
-    /// <summary>
-    /// Dependancy Injection - Create an #IServiceProvider with the necessary services
-    /// </summary>
-    /// <returns></returns>
-    static IServiceProvider CreateProvider()
-    {
-        var config = new DiscordSocketConfig()
-        {
-            GatewayIntents = GatewayIntents.AllUnprivileged,
-            LogLevel = LogSeverityLevel,
-            DefaultRetryMode = RetryMode.RetryTimeouts | RetryMode.Retry502 | RetryMode.RetryRatelimit
-        };
-        var appConfig = ApplicationConfig.GetConfig();
-        var window = new MainWindow();
-        return new ServiceCollection()
-            .AddSingleton(new DiscordSocketClient(config))
-            .AddSingleton<CommandService>()
-            .AddSingleton(new DataHandler(appConfig.ConnectionString))
-            .AddSingleton(window)
-            .AddSingleton(new UiService(window))
-            .BuildServiceProvider();
+        host.StopAsync();
     }
 }
