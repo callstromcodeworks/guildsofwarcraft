@@ -9,8 +9,9 @@
 using Dapper;
 using System.Data.SqlClient;
 using System.Data;
+using CCW.GoW.DataService.Objects;
 
-namespace CCW.GoW.DataService;
+namespace CCW.GoW.DataService.Database;
 
 public class DataHandler
 {

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Guilds of Warcraft", "Guilds of Warcraft\Guilds of Warcraft.csproj", "{4F4B94F1-602D-448E-B953-2845C09248AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuildsOfWarcraftUI", "GuildsOfWarcraft\GuildsOfWarcraftUI.csproj", "{4F4B94F1-602D-448E-B953-2845C09248AC}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GoWDB", "UserDB\GoWDB.sqlproj", "{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GoWDB", "GoWDB\GoWDB.sqlproj", "{7D0EE3BF-AC33-4161-9301-029E94A2C4A6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardOauthServer", "BlizzardOauthServer\BlizzardOauthServer.csproj", "{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}"
 EndProject

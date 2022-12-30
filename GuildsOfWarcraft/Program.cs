@@ -23,6 +23,7 @@ public class Program
             {
                 services.AddHostedService<Worker>();
             }).Build();
+
     /// <summary>
     /// Creates a <see cref="ServiceProvider"/> with the necessary services
     /// </summary>
@@ -40,13 +41,11 @@ public class Program
     {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        host.RunAsync();
-        var window = new MainWindow(CreateProvider());
-        Application.Run(window);
         Application.ApplicationExit += Exit;
+        host.StartAsync();
+        Application.Run(new MainWindow(CreateProvider()));
     }
-
-    private static void Exit(object? sender, EventArgs e)
+    public static void Exit(object? sender, EventArgs e)
     {
         host.StopAsync();
     }

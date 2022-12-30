@@ -6,7 +6,7 @@
  * 
  */
 
-namespace CCW.GoW.DataService;
+namespace CCW.GoW.DataService.Objects;
 
 //TODO add localized strings for other languages
 
@@ -14,7 +14,7 @@ public enum Lang
 {
     ENUS
 }
-internal static class Localizer
+public static class Localizer
 {
 
     private static readonly Dictionary<string, string> TableENUS = new()

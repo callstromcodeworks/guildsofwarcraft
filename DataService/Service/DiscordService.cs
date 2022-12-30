@@ -10,22 +10,23 @@ using Discord.Commands;
 using Discord.Net;
 using Discord.WebSocket;
 using Discord;
-using System.Reflection;
+using CCW.GoW.DataService.Database;
+using CCW.GoW.DataService.Objects;
 using CCW.GoW.DataService.Service;
-using MessagePipe;
 
 namespace CCW.GoW.DataService;
 
 public class DiscordService
 {
     private readonly IServiceProvider services;
-    private readonly MessageService message;
+    private readonly MessageService messageService;
     private readonly DiscordSocketClient discordClient;
     private readonly CommandService commandService;
+    private readonly CommandHandler commandHandler;
     private readonly DataHandler dataHandler;
     internal HashSet<ServerConfig> configSet;
 
-    private static readonly string SourceInit = "Init";
+    private static readonly string SourceStartup = "Startup";
     private static readonly string SourceGuilds = "Guilds";
     private static readonly string SourceGuildEvents = "Guild Events";
     private static readonly string SourceCommands = "Commands";
@@ -34,27 +35,28 @@ public class DiscordService
     public DiscordService(IServiceProvider _services)
     {
         services = _services;
-        message = new MessageService(services.GetRequiredService<IDistributedPublisher<int, string>>());
+        messageService = services.GetRequiredService<MessageService>();
         discordClient = services.GetRequiredService<DiscordSocketClient>();
         commandService = services.GetRequiredService<CommandService>();
         dataHandler = services.GetRequiredService<DataHandler>();
         configSet = dataHandler.LoadAllServers().GetAwaiter().GetResult();
+        commandHandler = new CommandHandler(services);
     }
 
     public async Task RunAsync()
     {
         SetEventHandlers();
-        await Log(new LogMessage(LogSeverity.Debug, SourceInit, "Logging into Discord"));
+        await messageService.Log(new LogMessage(LogSeverity.Debug, SourceStartup, "Logging into Discord"));
         await discordClient.LoginAsync(TokenType.Bot, Worker.AppConfig.DiscordToken);
-        await Log(new LogMessage(LogSeverity.Debug, SourceInit, "Starting client"));
+        await messageService.Log(new LogMessage(LogSeverity.Debug, SourceStartup, "Starting client"));
         await discordClient.StartAsync();
         await Task.Delay(-1);
     }
 
     private void SetEventHandlers()
     {
-        commandService.Log += Log;
-        discordClient.Log += Log;
+        commandService.Log += messageService.Log;
+        discordClient.Log += messageService.Log;
         discordClient.Connected += Connected;
         discordClient.Disconnected += Disconnected;
         discordClient.Ready += Ready;
@@ -70,7 +72,7 @@ public class DiscordService
         discordClient.InviteCreated += InviteCreated;
         discordClient.InviteDeleted += InviteDeleted;
         discordClient.ReactionAdded += ReactionAdded;
-        discordClient.SlashCommandExecuted += SlashCommandExecuted;
+        discordClient.SlashCommandExecuted += commandHandler.HandleCommand;
     }
 
     #region Client callbacks
@@ -97,7 +99,7 @@ public class DiscordService
         }
         catch (InvalidOperationException ex)
         {
-            await Log(new LogMessage(LogSeverity.Error, SourceCommands, ex.Message));
+            await messageService.Log(new LogMessage(LogSeverity.Error, SourceCommands, ex.Message));
         }
 
         if (cmdList.Count > 0)
@@ -110,27 +112,25 @@ public class DiscordService
         }
         catch (HttpException ex)
         {
-            if (ex.HttpCode is not System.Net.HttpStatusCode.MethodNotAllowed)
-                await Log(new LogMessage(LogSeverity.Error, SourceCommands, $"Exception: {ex.Reason}"));
-            else await Log(new LogMessage(LogSeverity.Error, SourceCommands, $"405 MethodNotAllowed"));
+            await messageService.Log(new LogMessage(LogSeverity.Error, SourceCommands, $"Exception: {ex.Reason}"));
         }
     }
     #region Connection events
     async Task Connected()
     {
-        await message.UpdateStatus("Connected");
-        await Log(new LogMessage(LogSeverity.Info, SourceInit, "Connected to gateway"));
+        await messageService.UpdateStatus("Connected");
+        await messageService.Log(new LogMessage(LogSeverity.Info, SourceStartup, "Connected to gateway"));
     }
     async Task Disconnected(Exception ex)
     {
-        await message.UpdateStatus("Disconnected");
-        await Log(new LogMessage(LogSeverity.Error, SourceInit, "Failed to connect"));
-        await Log(new LogMessage(LogSeverity.Debug, SourceInit, "Exception occured", ex));
+        await messageService.UpdateStatus("Disconnected");
+        await messageService.Log(new LogMessage(LogSeverity.Error, SourceStartup, "Failed to connect"));
+        await messageService.Log(new LogMessage(LogSeverity.Debug, SourceStartup, "Exception occured", ex));
     }
     async Task Ready()
     {
-        await message.UpdateStatus("Ready");
-        await Log(new LogMessage(LogSeverity.Info, SourceInit, "Ready"));
+        await messageService.UpdateStatus("Ready");
+        await messageService.Log(new LogMessage(LogSeverity.Info, SourceStartup, "Ready"));
         await CreateGlobalCommands();
     }
     #endregion
@@ -145,8 +145,8 @@ public class DiscordService
             if (!await dataHandler.AddDiscordServer(config)) await dataHandler.UpdateDiscordServer(config);
         }
         configSet.Add(config);
-        await message.AddItem(config.Name);
-        await Log(new LogMessage(LogSeverity.Info, SourceInit, $"Guild available: {guild.Name}"));
+        await messageService.AddItem(config.Name);
+        await messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Guild available: {guild.Name}"));
     }
     async Task GuildUnavailable(SocketGuild guild)
     {
@@ -154,11 +154,11 @@ public class DiscordService
         if (config is not null)
         {
             configSet.Remove(config);
-            await message.RemoveItem(config.Name);
+            await messageService.RemoveItem(config.Name);
             await dataHandler.UpdateDiscordServer(config);
-            await Log(new LogMessage(LogSeverity.Info, SourceInit, $"Guild unavailable: {guild.Name}"));
+            await messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Guild unavailable: {guild.Name}"));
         }
-        else await Log(new LogMessage(LogSeverity.Warning, SourceInit, "Guild not in configuration set"));
+        else await messageService.Log(new LogMessage(LogSeverity.Warning, SourceGuilds, "Guild not in configuration set"));
     }
     async Task JoinedGuild(SocketGuild guild)
     {
@@ -169,81 +169,56 @@ public class DiscordService
         };
         await dataHandler.AddDiscordServer(config);
         configSet.Add(config);
-        await message.AddItem(config.Name);
-        await Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Joined guild: {guild.Name}"));
+        await messageService.AddItem(config.Name);
+        await messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Joined guild: {guild.Name}"));
     }
     async Task LeftGuild(SocketGuild guild)
     {
-        await Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Left guild: {guild.Name}"));
+        await messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, $"Left guild: {guild.Name}"));
         var config = configSet.First(c => c.Id == guild.Id.ToString());
-        if (config is null) await Log(new LogMessage(LogSeverity.Warning, SourceGuilds, "Guild not in configuration set so not removed"));
+        if (config is null) await messageService.Log(new LogMessage(LogSeverity.Warning, SourceGuilds, "Guild not in configuration set so not removed"));
         else
         {
             await dataHandler.RemoveDiscordServer(config);
             configSet.Remove(config);
-            await message.RemoveItem(config.Name);
+            await messageService.RemoveItem(config.Name);
         }
     }
     Task InviteCreated(SocketInvite invite)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuilds, "Invites not currently implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, "Invites not currently implemented"));
     }
     Task InviteDeleted(SocketGuildChannel channel, string deletedCode)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuilds, "Invites not currently implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuilds, "Invites not currently implemented"));
     }
     #endregion
     #region GuildEvents events
     Task GuildScheduledEventCreated(SocketGuildEvent eventParam)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
     }
     Task GuildScheduledEventCancelled(SocketGuildEvent eventParam)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
     }
     Task GuildScheduledEventUpdated(Cacheable<SocketGuildEvent, ulong> cachedEvent, SocketGuildEvent eventParam)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
     }
     Task GuildScheduledEventStarted(SocketGuildEvent eventParam)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
     }
     Task GuildScheduledEventCompleted(SocketGuildEvent eventParam)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceGuildEvents, "Not implemented"));
     }
     #endregion
-    async Task SlashCommandExecuted(SocketSlashCommand command)
-    {
-        switch (command.CommandName)
-        {
-            case "setguild":
-                await command.FollowupAsync($"Please authorize this application here: {BlizzardApi.BlizzApiHandler.GetAuthorizationUri()}", ephemeral: true);
-                //await CheckForAuthorizationCode(command.GuildId.ToString());
-                await command.RespondAsync("Your Guild is now set", ephemeral: true);
-                break;
-            case "removeguild":
-                await command.RespondAsync("Your Guild is now removed", ephemeral: true);
-                break;
-        }
-    }
     Task ReactionAdded(Cacheable<IUserMessage, ulong> cachedMessage, Cacheable<IMessageChannel, ulong> cachedChannel, SocketReaction reaction)
     {
-        return Log(new LogMessage(LogSeverity.Info, SourceMessages, "Reactions not currently implemented"));
-    }
-    Task Log(LogMessage msg)
-    {
-        if (msg.Severity > Worker.LogSeverityLevel) return Task.CompletedTask;
-        return message.WriteLine(msg.ToString());
+        return messageService.Log(new LogMessage(LogSeverity.Info, SourceMessages, "Reactions not currently implemented"));
     }
 
     #endregion
-
-    //TODO link with blazor to get result from auth
-    async Task CheckForAuthorizationCode(string? GuildId)
-    {
-
-    }
 }

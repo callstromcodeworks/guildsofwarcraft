@@ -6,7 +6,7 @@
  * 
  */
 
-namespace CCW.GoW.DataService;
+namespace CCW.GoW.DataService.Objects;
 
 public class ServerConfig
 {

@@ -5,6 +5,7 @@
  * 
  * 
  */
+using Discord;
 using MessagePipe;
 
 namespace CCW.GoW.DataService.Service;
@@ -25,4 +26,9 @@ public class MessageService
     public async Task UpdateStatus(string status) => await _publisher.PublishAsync(_UpdateStatus, status);
 
     public async Task WriteLine(string message) => await _publisher.PublishAsync(_WriteLine, message);
+    public async Task Log(LogMessage msg)
+    {
+        if (msg.Severity > Worker.LogSeverityLevel) return;
+        await WriteLine(msg.ToString());
+    }
 }

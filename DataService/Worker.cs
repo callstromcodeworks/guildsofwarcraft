@@ -2,6 +2,8 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Discord;
 using MessagePipe;
+using CCW.GoW.DataService.Database;
+using CCW.GoW.DataService.Service;
 
 namespace CCW.GoW.DataService;
 
@@ -11,7 +13,7 @@ public class Worker : BackgroundService
 #if DEBUG
         LogSeverity.Debug;
 #else
-    LogSeverity.Error;
+    LogSeverity.Info;
 #endif
 
     public static readonly ApplicationConfig AppConfig = ApplicationConfig.GetConfig();
@@ -36,6 +38,7 @@ public class Worker : BackgroundService
         return new ServiceCollection()
             .AddMessagePipe()
             .AddMessagePipeNamedPipeInterprocess("CCW-GoW")
+            .AddSingleton(services => new MessageService(services.GetRequiredService<IDistributedPublisher<int, string>>()))
             .AddSingleton(new DiscordSocketClient(config))
             .AddSingleton<CommandService>()
             .AddSingleton(new DataHandler(AppConfig.ConnectionString))
