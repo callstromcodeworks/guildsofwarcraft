@@ -1,13 +1,40 @@
 ﻿@page "/oauth"
 @inject NavigationManager NavManager
-@using Microsoft.AspNetCore.WebUtilities
+@inject IDistributedPublisher<string, string> Publisher
+@inject IRemoteRequestHandler<string, string> handler
+
+<div>
+    @RenderedInstance
+</div>
 
 @code {
+    RenderFragment? RenderedInstance;
+
     protected override void OnInitialized()
     {
+        bool success = false;
         var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var authCode)) {
-            
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("code", out var authCode))
+        {
+            QueryHelpers.ParseQuery(uri.Query).TryGetValue("state", out var state);
+            Publisher.PublishAsync(state, authCode);
+            handler.InvokeAsync(state);
+            success = true;
         }
-}
+        RenderedInstance = builder =>
+        {
+            if (success)
+            {
+                builder.OpenComponent(0, typeof(Base));
+                builder.AddAttribute(1, "Title", "Success");
+                builder.CloseComponent();
+            }
+            else
+            {
+                builder.OpenComponent(0, typeof(Base));
+                builder.AddAttribute(1, "Title", "Failure");
+                builder.CloseComponent();
+            }
+        };
+    }
 }

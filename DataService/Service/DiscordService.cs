@@ -26,11 +26,11 @@ public class DiscordService
     private readonly DataHandler dataHandler;
     internal HashSet<ServerConfig> configSet;
 
-    private static readonly string SourceStartup = "Startup";
-    private static readonly string SourceGuilds = "Guilds";
-    private static readonly string SourceGuildEvents = "Guild Events";
-    private static readonly string SourceCommands = "Commands";
-    private static readonly string SourceMessages = "Messages";
+    internal static readonly string SourceStartup = "Startup";
+    internal static readonly string SourceGuilds = "Guilds";
+    internal static readonly string SourceGuildEvents = "Guild Events";
+    internal static readonly string SourceCommands = "Commands";
+    internal static readonly string SourceMessages = "Messages";
 
     public DiscordService(IServiceProvider _services)
     {

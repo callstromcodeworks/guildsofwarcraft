@@ -1,9 +1,16 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using MessagePack.Resolvers;
+using MessagePipe;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMessagePipe()
+    .AddMessagePipeTcpInterprocess("127.0.0.1", 23800, configure =>
+    {
+        configure.HostAsServer = true;
+        configure.InstanceLifetime = InstanceLifetime.Singleton;
+        configure.MessagePackSerializerOptions = StandardResolver.Options;
+    });
 
 var app = builder.Build();
 
@@ -13,11 +20,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
-app.UseStaticFiles();
-
-app.UseRouting();
+app.UseHttpsRedirection()
+    .UseStaticFiles()
+    .UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");

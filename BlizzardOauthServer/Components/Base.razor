@@ -1,0 +1,25 @@
+﻿@implements IComponent
+<head>
+    <link href="css/base.css" rel="stylesheet" />
+    <title>@Title</title>
+</head>
+<header>
+    <h3>Callstrom Code Works</h3>
+</header>
+<body>
+    @Body
+</body>
+<footer>
+    Copyright 2022 Callstrom Code Works
+</footer>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Callstrom Code Works - Error";
+    [Parameter]
+    public IComponent? Body { get; set; }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+}

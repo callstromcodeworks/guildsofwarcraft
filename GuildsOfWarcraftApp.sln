@@ -9,11 +9,11 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "GoWDB", "GoWDB\GoWDB.sqlpro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardOauthServer", "BlizzardOauthServer\BlizzardOauthServer.csproj", "{3BCB32A9-2BA8-4A8E-96EB-57FF070D4222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataService", "DataService\DataService.csproj", "{B2893E14-C3C5-49A6-A815-C3D7306CB353}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataService", "DataService\DataService.csproj", "{B2893E14-C3C5-49A6-A815-C3D7306CB353}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardApi", "BlizzardApi\BlizzardApi.csproj", "{24A3C090-B638-445F-90ED-2921C5372E93}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extentions", "Extentions\Extentions.csproj", "{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extentions", "Extentions\Extentions.csproj", "{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
