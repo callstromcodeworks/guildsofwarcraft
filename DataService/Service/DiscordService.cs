@@ -5,7 +5,6 @@
  * 
  * 
  */
-
 using Discord.Commands;
 using Discord.Net;
 using Discord.WebSocket;
@@ -40,7 +39,7 @@ public class DiscordService
         commandService = services.GetRequiredService<CommandService>();
         dataHandler = services.GetRequiredService<DataHandler>();
         configSet = dataHandler.LoadAllServers().GetAwaiter().GetResult();
-        commandHandler = new CommandHandler(services);
+        commandHandler = CommandHandler.GetInstance(services);
     }
 
     public async Task RunAsync()

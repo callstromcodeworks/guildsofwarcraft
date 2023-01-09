@@ -15,6 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlizzardApi", "BlizzardApi\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extentions", "Extentions\Extentions.csproj", "{7E0A94F5-AF4D-4FBF-95D2-8343613A0696}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{041F538A-D61B-4764-92FF-0C623B04B961}"
+	ProjectSection(SolutionItems) = preProject
+		licenses.md = licenses.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

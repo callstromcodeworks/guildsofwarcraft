@@ -8,7 +8,6 @@ builder.Services.AddMessagePipe()
     .AddMessagePipeTcpInterprocess("127.0.0.1", 23800, configure =>
     {
         configure.HostAsServer = true;
-        configure.InstanceLifetime = InstanceLifetime.Singleton;
         configure.MessagePackSerializerOptions = StandardResolver.Options;
     });
 

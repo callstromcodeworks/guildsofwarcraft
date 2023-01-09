@@ -36,7 +36,7 @@ public partial class MainWindow : Form
 #endif
     }
 
-    public async Task SubscriptionHandler(IDistributedSubscriber<int, string>? subscriber)
+    private async Task SubscriptionHandler(IDistributedSubscriber<int, string>? subscriber)
     {
         if (subscriber == null) throw new ArgumentNullException();
         UiService ui = UiService.CreateInstance(this);
@@ -60,8 +60,11 @@ public partial class MainWindow : Form
 
     private void ConfigMenuItem_Click(object sender, EventArgs e)
     {
-        //TODO add config form and serialization
-
+        using var configForm = new ConfigWindow();
+        if (configForm.ShowDialog() == DialogResult.OK)
+        {
+            //TODO save
+        }
     }
     private void DebugToolsMenuItem_Click(object sender, EventArgs e)
     {

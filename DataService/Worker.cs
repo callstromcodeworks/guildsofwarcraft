@@ -1,3 +1,10 @@
+/*
+ * 
+ * 
+ * Copyright Ryan Callstrom 2022, All rights reserved
+ * 
+ * 
+ */
 using Discord.Commands;
 using Discord.WebSocket;
 using Discord;

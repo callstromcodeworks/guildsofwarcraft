@@ -28,7 +28,8 @@ public class UiService
     }
 
     public Task AddItem(string name)
-    {
+    {if (!serverList.Created)
+            serverList.HandleCreated += (sender, e) => { AddItem(name); };
         if (serverList.InvokeRequired) serverList.Invoke( delegate { AddItem(name); });
         else serverList.Items.Add(name);
         return Task.CompletedTask;
@@ -45,6 +46,8 @@ public class UiService
 
     public Task RemoveItem(string name)
     {
+        if (!serverList.Created)
+            serverList.HandleCreated += (sender, e) => { RemoveItem(name); };
         if (serverList.InvokeRequired) serverList.Invoke(delegate { RemoveItem(name); });
         else serverList.Items.Remove(name);
         return Task.CompletedTask;
@@ -66,6 +69,8 @@ public class UiService
     /// <returns></returns>
     public Task UpdateStatus(string text)
     {
+        if (!discordStatus.GetCurrentParent().Created)
+            discordStatus.GetCurrentParent().HandleCreated += (sender, e) => { UpdateStatus(text); };
         if (discordStatus.GetCurrentParent().InvokeRequired) discordStatus.GetCurrentParent().Invoke(delegate { UpdateStatus(text); });
         else discordStatus.Text = text;
         return Task.CompletedTask;
@@ -87,11 +92,8 @@ public class UiService
     /// <returns></returns>
     public Task WriteLine(string text)
     {
-        if (!consoleBox.Created) consoleBox.HandleCreated += (sender, e) =>
-        {
-            if (consoleBox.InvokeRequired) consoleBox.Invoke(delegate { WriteLine(text); });
-            else consoleBox.AppendText($"{text}{Environment.NewLine}");
-        };
+        if (!consoleBox.Created)
+            consoleBox.HandleCreated += (sender, e) => { WriteLine(text); };
         if (consoleBox.InvokeRequired) consoleBox.Invoke(delegate { WriteLine(text); });
         else consoleBox.AppendText($"{text}{Environment.NewLine}");
         return Task.CompletedTask;
